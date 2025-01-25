@@ -1,0 +1,7 @@
+[lfarkas]
+name=LFarkas Repository
+baseurl=http://www.lfarkas.org/linux/packages/fedora/$releasever/$basearch/
+#gpgkey=http://www.lfarkas.org/linux/packages/RPM-GPG-KEY
+enabled=1
+priority=3
+gpgcheck=0
