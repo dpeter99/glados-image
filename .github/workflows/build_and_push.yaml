@@ -23,6 +23,8 @@ jobs:
         with:
           image: ${{ env.IMAGE_NAME }}
           tags: latest-nvidia ${{ github.sha }}
+          extra-args: |
+            --target=Nvidia
           containerfiles: |
             ./Dockerfile
 
