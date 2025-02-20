@@ -26,10 +26,8 @@ RUN dnf clean all && \
 
 FROM Base as Nvidia
 
-RUN dnf install -y \
-    akmod-nvidia nvidia-container-toolkit
-
-RUN akmods --force --kernels "$(rpm -q --queryformat '%{VERSION}-%{RELEASE}.%{ARCH}' kernel-devel)"
-
 COPY glados-root /
 
+RUN /tmp/scripts/modules.d/010-nvidia.sh
+
+# RUN /tmp/scripts/modules.d/050-install-houdini.sh
