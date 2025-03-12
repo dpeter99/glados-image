@@ -28,7 +28,7 @@ jobs:
           build-args: |
             NVIDIA_ENABLED=true
           containerfiles: |
-            ./Dockerfile
+            ./Containerfile
 
       - name: Log in to the GitHub Container registry
         uses: redhat-actions/podman-login@v1
