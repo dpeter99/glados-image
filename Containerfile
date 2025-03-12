@@ -1,9 +1,9 @@
 ARG FEDORA_MAJOR_VERSION=41
 
+FROM quay.io/fedora-ostree-desktops/kinoite:${FEDORA_MAJOR_VERSION} as Base
+
 ARG NVIDIA_ENABLED=false
 ENV NVIDIA_ENABLED=${NVIDIA_ENABLED}
-
-FROM quay.io/fedora-ostree-desktops/kinoite:${FEDORA_MAJOR_VERSION} as Base
 
 RUN dnf install -y \
     https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm  \
