@@ -1,1 +1,3 @@
 .idea
+glados-root/setup/scripts/modules.d/houdini
+glados-root/setup/scripts/modules.d/150-install-houdini.sh.disabled

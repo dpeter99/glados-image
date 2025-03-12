@@ -4,9 +4,11 @@ on:
   push:
     branches:
       - main
+  schedule:
+    - "0 4 * * *"
 
 jobs:
-  build:
+  build-nvidia:
     name: Build Fedora bootc image
     runs-on: ubuntu-latest
     env:
@@ -23,8 +25,8 @@ jobs:
         with:
           image: ${{ env.IMAGE_NAME }}
           tags: latest-nvidia ${{ github.sha }}
-          extra-args: |
-            --target=Nvidia
+          build-args: |
+            NVIDIA_ENABLED=true
           containerfiles: |
             ./Dockerfile
 
