@@ -41,6 +41,11 @@ EOF
 # Import signing key
 rpm --import https://downloads.1password.com/linux/keys/1password.asc
 
+echo "========================================================"
+echo "Verifying 1Password signing key"
+rpm -q --queryformat "%{SUMMARY}\n" $(rpm -q gpg-pubkey)
+echo "========================================================"
+
 # Now let's install the packages.
 dnf install -y 1password 1password-cli
 
