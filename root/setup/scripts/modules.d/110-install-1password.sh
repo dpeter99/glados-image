@@ -4,7 +4,7 @@ set -eu
 # Prepare staging directory
 mkdir -p /var/opt # -p just in case it exists
 
-sudo rpm --import https://downloads.1password.com/linux/keys/1password.asc
+rpm --import https://downloads.1password.com/linux/keys/1password.asc
 
 dnf install -y 1password 1password-cli
 
