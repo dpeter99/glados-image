@@ -1,4 +1,5 @@
-
+#!/bin/bash
+set -e  # Exit on any error
 
 for script in /setup/scripts/modules.d/*.sh; do
   if [[ -f "$script" ]]; then

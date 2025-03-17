@@ -1,9 +1,10 @@
-
+#!/bin/sh
+set -eu
 
 # Prepare staging directory
 mkdir -p /var/opt # -p just in case it exists
 
-sudo dnf install -y 1password 1password-cli
+dnf install -y 1password 1password-cli
 
 # And then we do the hacky dance!
 mv /var/opt/1Password /usr/lib/opt/1Password # move this over here
