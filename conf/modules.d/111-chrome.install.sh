@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Source helper functions
-if [ -f "${CONF_DIR}/utils.sh" ]; then
-  source "${CONF_DIR}/utils.sh"
+if [ -f "${LIB_DIR}/utils.sh" ]; then
+  source "${LIB_DIR}/utils.sh"
 else
   echo "Helper functions not found! Please install them first."
   exit 1
