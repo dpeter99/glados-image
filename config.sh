@@ -14,11 +14,11 @@ else
 fi
 
 # Check if running as root
-if [ "$(id -u)" -ne 0 ]; then
-  error "This script must be run as root"
-  sudo -Es "$0" "$@"
-  exit 1
-fi
+#if [ "$(id -u)" -ne 0 ]; then
+#  error "This script must be run as root"
+#  sudo -Es "$0" "$@"
+#  exit 1
+#fi
 
 # Show banner
 banner "Profile Setup & Configuration"
@@ -73,7 +73,7 @@ if [ -n "$COPR_REPOS" ]; then
   for repo in $COPR_REPOS; do
     subtask "Enabling COPR repository: $repo"
     gum spin --spinner dot --title "Working..." -- \
-      dnf copr enable -y "$repo" &> /dev/null
+      sudo dnf copr enable -y "$repo" &> /dev/null
 
     if [ $? -eq 0 ]; then
       task "Enabled COPR repository: $repo"
@@ -96,7 +96,7 @@ if [ -n "$PACKAGES" ]; then
   echo "$PACKAGES" | tr ' ' '\n' | gum choose --no-limit --height 15 --selected-prefix "⦿ " --unselected-prefix "○ " --selected.foreground 46
 
   gum spin --spinner dot --title "Installing packages..." -- \
-    dnf install -y $PACKAGES
+    sudo dnf install -y $PACKAGES
 
   if [ $? -eq 0 ]; then
     task "Successfully installed all packages"

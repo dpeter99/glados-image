@@ -142,10 +142,6 @@ function check_command() {
 function check_package() {
   if command -v rpm &> /dev/null; then
     rpm -q "$1" &> /dev/null
-  elif command -v dpkg &> /dev/null; then
-    dpkg -l "$1" &> /dev/null
-  elif command -v pacman &> /dev/null; then
-    pacman -Q "$1" &> /dev/null
   else
     warning "Unable to check if package $1 is installed"
     return 1
@@ -165,7 +161,7 @@ function install_packages() {
   info "Installing the following packages:"
   choose_items "$packages"
 
-  spinner "Installing packages" "dnf install -y $packages"
+  spinner "Installing packages" sudo dnf install -y $packages
 
   if [ $? -eq 0 ]; then
     task "Successfully installed all packages"
@@ -186,7 +182,7 @@ function enable_copr() {
   fi
 
   subtask "Enabling COPR repository: $repo"
-  spinner "Enabling COPR repository" "dnf copr enable -y \"$repo\""
+  spinner "Enabling COPR repository" sudo dnf copr enable -y "$repo"
 
   if [ $? -eq 0 ]; then
     task "Enabled COPR repository: $repo"
