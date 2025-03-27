@@ -1,0 +1,20 @@
+name: personal
+description: Personal profile
+inherit: "base"
+modules:
+  enabled:
+    - 010-host-docker
+    - 111-chrome.install
+packages:
+  copr:
+    - atim/lazygit
+    - atim/lazydocker
+  install:
+    - wl-clipboard
+    - gedit
+    - git
+    - git-lfs
+    - git-email
+    - gh
+    - lazydocker
+    - lazygit

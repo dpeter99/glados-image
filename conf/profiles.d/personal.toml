@@ -1,10 +1,10 @@
 name="personal"
 description="Personal profile"
+inherit="base"
 
 [modules]
 enabled=[
     "010-host-docker",
-    "110-nvm",
     "111-chrome.install"
 ]
 

@@ -25,13 +25,13 @@ source "${LIB_DIR}/parse-args.sh"
 source "${LIB_DIR}/load-profile.sh"
 
 # Install COPR repositories
-source "${LIB_DIR}/install-copr.sh"
+#source "${LIB_DIR}/install-copr.sh"
 
 # Install packages
-source "${LIB_DIR}/install-packages.sh"
+#source "${LIB_DIR}/install-packages.sh"
 
 # Process modules
-source "${LIB_DIR}/process-modules.sh"
+#source "${LIB_DIR}/process-modules.sh"
 
 # Completion
 section "Setup complete for profile: $PROFILE_NAME"

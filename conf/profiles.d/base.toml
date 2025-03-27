@@ -1,0 +1,21 @@
+name="base"
+description="Base profile with common packages and modules"
+
+[modules]
+enabled=[
+    # Common modules
+    "110-nvm"
+]
+
+[packages]
+copr=[
+    # Common COPR repositories
+]
+install=[
+    # Common utilities
+    "git",
+    "curl",
+    "wget",
+    "jq",
+    "yq"
+]
