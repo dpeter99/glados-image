@@ -1,5 +1,10 @@
 #!/bin/bash
 # load_profile.sh - Load and validate the selected profile with simple inheritance support
+# Create a temporary directory for profile processing
+TEMP_DIR=$(mktemp -d)
+EFFECTIVE_PROFILE_FILE="${TEMP_DIR}/effective-profile.yaml"
+
+debug "Temporary directory: $EFFECTIVE_PROFILE_FILE"
 
 # Function to parse a profile with inheritance
 parse_profile() {
@@ -28,11 +33,10 @@ parse_profile() {
 
     # Merge parent and child profiles using yq's ireduce with *+ operator
     # This properly merges arrays by concatenating them
-    local effective_content=$(yq eval-all '. as $item ireduce ({}; . *+ $item)' "${parent_file}" "${profile_file}")
-    echo "$effective_content"
+    yq eval-all '. as $item ireduce ({}; . *+ $item)' "${parent_file}" "${profile_file}" > "$EFFECTIVE_PROFILE_FILE"
   else
     # No inheritance, just use the profile as-is
-    cat "$profile_file"
+    cat "$profile_file" > "$EFFECTIVE_PROFILE_FILE"
   fi
 
   return 0
@@ -45,21 +49,14 @@ if ! command -v yq &> /dev/null; then
   task "Installed yq"
 fi
 
-# Create a temporary directory for profile processing
-TEMP_DIR=$(mktemp -d)
-EFFECTIVE_PROFILE_FILE="${TEMP_DIR}/effective-profile.yaml"
-
 # Parse the profile with inheritance
 section "Loading profile: $PROFILE"
-EFFECTIVE_CONTENT=$(parse_profile "$PROFILE")
+parse_profile "$PROFILE"
 
 if [ $? -ne 0 ]; then
   error "Failed to load profile: $PROFILE"
   exit 1
 fi
-
-# Save the effective profile to temporary file
-echo "$EFFECTIVE_CONTENT" > "$EFFECTIVE_PROFILE_FILE"
 
 # Get profile information from the effective profile
 PROFILE_NAME=$(yq -r '.name // "'"$PROFILE"'"' "$EFFECTIVE_PROFILE_FILE")
