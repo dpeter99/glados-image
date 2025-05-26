@@ -5,16 +5,19 @@ on:
     branches:
       - main
   schedule:
-    - cron: "0 4 * * *"
+    - cron: "0 4 * * 0,2,4,6"
 
 jobs:
-  build-nvidia:
+  build:
     name: Build Fedora bootc image
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        fedora_major_version: [41, 42]
+        nvidia_enabled: [true, false]
     env:
       IMAGE_NAME: glados-bootc-image
       REGISTRY: quay.io/dpeter99
-
     steps:
       - name: Clone the repository
         uses: actions/checkout@v4
@@ -29,11 +32,12 @@ jobs:
         with:
           image: ${{ env.IMAGE_NAME }}
           tags: |
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest-nvidia
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.build-date.outputs.date }}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:fedora${{ matrix.fedora_major_version }}${{ matrix.nvidia_enabled == 'true' && '-nvidia' || '' }}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:fedora${{ matrix.fedora_major_version }}${{ matrix.nvidia_enabled == 'true' && '-nvidia' || '' }}-${{ github.sha }}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:fedora${{ matrix.fedora_major_version }}${{ matrix.nvidia_enabled == 'true' && '-nvidia' || '' }}-${{ steps.build-date.outputs.date }}
           build-args: |
-            NVIDIA_ENABLED=true
+            NVIDIA_ENABLED=${{ matrix.nvidia_enabled }}
+            FEDORA_MAJOR_VERSION=${{ matrix.fedora_major_version }}
           containerfiles: |
             ./Containerfile
 
