@@ -26,15 +26,24 @@ jobs:
         id: build-date
         run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
 
+      - name: Set NVIDIA label suffix
+        id: nvidia-label
+        run: |
+          if [ "${{ matrix.nvidia_enabled }}" = "true" ]; then
+            echo "label=-nvidia" >> $GITHUB_OUTPUT
+          else
+            echo "label=" >> $GITHUB_OUTPUT
+          fi
+
       - name: Use buildah to create the image
         id: build-image
         uses: redhat-actions/buildah-build@v2
         with:
           image: ${{ env.IMAGE_NAME }}
           tags: |
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:fedora${{ matrix.fedora_major_version }}${{ matrix.nvidia_enabled == 'true' && '-nvidia' || '' }}
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:fedora${{ matrix.fedora_major_version }}${{ matrix.nvidia_enabled == 'true' && '-nvidia' || '' }}-${{ github.sha }}
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:fedora${{ matrix.fedora_major_version }}${{ matrix.nvidia_enabled == 'true' && '-nvidia' || '' }}-${{ steps.build-date.outputs.date }}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:fedora${{ matrix.fedora_major_version }}${{ steps.nvidia-label.outputs.label }}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:fedora${{ matrix.fedora_major_version }}${{ steps.nvidia-label.outputs.label }}-${{ github.sha }}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:fedora${{ matrix.fedora_major_version }}${{ steps.nvidia-label.outputs.label }}-${{ steps.build-date.outputs.date }}
           build-args: |
             NVIDIA_ENABLED=${{ matrix.nvidia_enabled }}
             FEDORA_MAJOR_VERSION=${{ matrix.fedora_major_version }}
