@@ -1,6 +1,5 @@
-#!/bin/sh
-set -eu
-
+#!/bin/bash
+set -euox pipefail
 # Cehck if NVIDIA_ENABLED is set to false and exit if it is
 if [ "${NVIDIA_ENABLED}" = "false" ]; then
   echo "NVIDIA_ENABLED is set to false, skipping Nvidia drivers installation"
@@ -20,4 +19,23 @@ QUALIFIED_KERNEL="$(rpm -q --queryformat '%{VERSION}-%{RELEASE}.%{ARCH}\n' kerne
 printf "Kernel version: \n RPM: ${QUALIFIED_KERNEL} \n uname: $(uname -r) \n"
 
 dnf install -y akmod-nvidia nvidia-container-toolkit xorg-x11-drv-nvidia-cuda
-akmods --force --kernels "${QUALIFIED_KERNEL}"
+
+kver=$(cd /usr/lib/modules && echo *)
+
+cat >/tmp/fake-uname <<EOF
+#!/usr/bin/env bash
+
+if [ "\$1" == "-r" ] ; then
+  echo ${kver}
+  exit 0
+fi
+
+exec /usr/bin/uname \$@
+EOF
+install -Dm0755 /tmp/fake-uname /tmp/bin/uname
+
+# PATH=/tmp/bin:$PATH dkms autoinstall -k ${kver}
+PATH=/tmp/bin:$PATH akmods --force --kernels ${kver}
+
+
+
