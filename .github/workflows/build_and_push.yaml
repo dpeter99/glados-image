@@ -14,18 +14,24 @@ jobs:
     env:
       IMAGE_NAME: glados-bootc-image
       REGISTRY: quay.io/dpeter99
-      BUILD_DATE: ${{ github.run_started_at || github.event.head_commit.timestamp || github.event.repository.updated_at || 'unknown-date' }}
 
     steps:
       - name: Clone the repository
         uses: actions/checkout@v4
+
+      - name: Generate build date tag
+        id: build-date
+        run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
 
       - name: Use buildah to create the image
         id: build-image
         uses: redhat-actions/buildah-build@v2
         with:
           image: ${{ env.IMAGE_NAME }}
-          tags: latest-nvidia ${{ github.sha }} ${{ env.BUILD_DATE }}
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest-nvidia
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.build-date.outputs.date }}
           build-args: |
             NVIDIA_ENABLED=true
           containerfiles: |
