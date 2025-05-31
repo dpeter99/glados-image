@@ -17,7 +17,8 @@ RUN dnf install -y \
     podman-compose \
     dotnet-sdk-8.0  \
     kubernetes-client \
-    webkit2gtk4.1 webkit2gtk4.0 kde-gtk-config
+    webkit2gtk4.1 webkit2gtk4.0 kde-gtk-config \
+    restic
 
 COPY root /
 
