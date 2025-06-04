@@ -58,6 +58,7 @@ mv /var/opt/1Password /usr/lib/1Password # move this over here
 # Create a symlink /usr/bin/1password => /opt/1Password/1password
 rm /usr/bin/1password
 ln -s /opt/1Password/1password /usr/bin/1password
+ln -s /opt/1Password/op-ssh-sign /usr/bin/op-ssh-sign
 
 #####
 # The following is a bastardization of "after-install.sh"
