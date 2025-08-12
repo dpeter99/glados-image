@@ -13,8 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        fedora_major_version: [41, 42]
-        nvidia_enabled: [true, false]
+        fedora_major_version: [42]
+        nvidia_enabled: [false]
     env:
       IMAGE_NAME: glados-bootc-image
       REGISTRY: quay.io/dpeter99
