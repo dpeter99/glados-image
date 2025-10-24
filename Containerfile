@@ -5,6 +5,8 @@ FROM quay.io/fedora-ostree-desktops/kinoite:${FEDORA_MAJOR_VERSION} as Base
 ARG NVIDIA_ENABLED=false
 ENV NVIDIA_ENABLED=${NVIDIA_ENABLED}
 
+RUN echo $(rpm -E %fedora)
+
 
 RUN dnf install -y \
     https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm  \
@@ -17,12 +19,12 @@ RUN dnf install -y \
     podman-compose \
     dotnet-sdk-8.0  \
     kubernetes-client \
-    webkit2gtk4.1 webkit2gtk4.0 kde-gtk-config \
-    restic
+    restic \
+    buildah
 
 COPY root /
 
-COPY glados-root /
+# COPY glados-root /
 
 RUN /setup/scripts/setup.sh
 
