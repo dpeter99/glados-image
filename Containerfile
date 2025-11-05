@@ -1,6 +1,6 @@
 ARG FEDORA_MAJOR_VERSION=42
 
-FROM quay.io/fedora-ostree-desktops/kinoite:${FEDORA_MAJOR_VERSION} as Base
+FROM quay.io/fedora/fedora-kinoite:${FEDORA_MAJOR_VERSION} as Base
 
 ARG NVIDIA_ENABLED=false
 ENV NVIDIA_ENABLED=${NVIDIA_ENABLED}
@@ -20,7 +20,8 @@ RUN dnf install -y \
     dotnet-sdk-8.0  \
     kubernetes-client \
     restic \
-    buildah
+    buildah \
+    git python3.11 python3-virtualenv rocm-hip
 
 COPY root /
 
