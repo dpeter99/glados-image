@@ -19,6 +19,9 @@ jobs:
       IMAGE_NAME: glados-bootc-image
       REGISTRY: quay.io/dpeter99
     steps:
+      - name: Delete huge unnecessary tools folder
+        run: rm -rf /opt/hostedtoolcache
+        
       - name: Clone the repository
         uses: actions/checkout@v4
 
