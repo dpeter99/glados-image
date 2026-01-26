@@ -21,7 +21,8 @@ RUN dnf install -y \
     kubernetes-client \
     restic \
     buildah \
-    git python3.11 python3-virtualenv rocm-hip
+    git python3.11 python3-virtualenv rocm-hip \
+    smem htop
 
 COPY root /
 
