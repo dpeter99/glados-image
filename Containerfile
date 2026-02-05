@@ -13,11 +13,12 @@ RUN dnf install -y \
     https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
 RUN dnf install -y \
+    nss-tools openssl \
     solaar \
     nu zsh \
     distrobox \
     podman-compose \
-    dotnet-sdk-8.0  \
+    dotnet-sdk-10.0  \
     kubernetes-client \
     restic \
     buildah \
