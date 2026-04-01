@@ -23,7 +23,9 @@ RUN dnf install -y \
     restic \
     buildah \
     git python3.11 python3-virtualenv rocm-hip \
-    smem htop
+    smem htop \
+    fastfetch \
+    ncurses-compat-libs ncurses ncurses-devel gcc
 
 COPY root /
 
