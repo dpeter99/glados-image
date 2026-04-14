@@ -1,5 +1,5 @@
-# Dsabled for now
-exit 0
 
-rpm -e --nodeps libfprint
-dnf install -y libfprint-tod /setup/scripts/modules.d/070-dell-fprint/libfprint-tod-broadcom-5.15.285-1.fc40.x86_64.rpm
+sudo dnf -y copr enable grahamwhiteuk/libfprint-tod
+
+sudo dnf -y swap libfprint libfprint-tod
+sudo dnf -y install libfprint-2-tod1-broadcom libfprint-tod-selinux
