@@ -25,7 +25,8 @@ RUN dnf install -y \
     git python3.11 python3-virtualenv rocm-hip \
     smem htop \
     fastfetch \
-    ncurses-compat-libs ncurses ncurses-devel gcc
+    ncurses-compat-libs ncurses ncurses-devel gcc \
+    syncthing
 
 COPY root /
 
