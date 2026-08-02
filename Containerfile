@@ -5,6 +5,8 @@ FROM quay.io/fedora/fedora-kinoite:${FEDORA_MAJOR_VERSION} as Base
 ARG NVIDIA_ENABLED=false
 ENV NVIDIA_ENABLED=${NVIDIA_ENABLED}
 
+ENV ONEPASSWORD_RELEASE_CHANNEL=beta
+
 RUN echo $(rpm -E %fedora)
 
 
