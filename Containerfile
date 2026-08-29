@@ -18,6 +18,7 @@ RUN dnf install -y \
     nss-tools openssl \
     solaar \
     nu zsh \
+    gum \
     distrobox \
     podman-compose \
     dotnet-sdk-10.0  \
